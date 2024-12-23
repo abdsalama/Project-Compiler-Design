@@ -121,7 +121,7 @@ The project consists of the following components:
 ## Screenshot
 Here is a screenshot of the **compiler Output**:
 
-[Screenshot 2024-12-23 155513](https://github.com/user-attachments/assets/da378caa-ba99-4011-ad2a-0f639526a150)
+![Screenshot 2024-12-23 155513](https://github.com/user-attachments/assets/7a9a57d1-0775-404b-8f3d-0588704ade10)
 
 ---
 
