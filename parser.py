@@ -2,7 +2,7 @@ class Parser:
     def __init__(self, token_stream):
         self.token_stream = token_stream
         self.token_index = 0
-        self.source_ast = {"main_scope": []}     #main scope
+        self.source_ast = {"main_scope": []}
 
     def current_token(self):
         return self.token_stream[self.token_index] if self.token_index < len(self.token_stream) else ("EOF", "")
@@ -15,7 +15,7 @@ class Parser:
         else:
             raise SyntaxError(f"Expected {expected_type} but found {token[0]} at index {self.token_index}")
 
-    def parse(self):  #main function in our code
+    def parse(self):
         while self.token_index < len(self.token_stream):
             token_type, token_value = self.current_token()
 
@@ -28,56 +28,56 @@ class Parser:
             elif token_type == "while loop":
                 self.source_ast["main_scope"].append(self.parse_while_loop())
             else:
-                self.token_index += 1  # Skip comments and unrecognized tokens 
+                self.token_index += 1
         return self.source_ast
 
     def parse_variable_declaration(self):
         variable_name = self.match("variable")[1]
-        self.match("operator")  # Skip "="
+        self.match("operator")
         value = self.match(self.current_token()[0])[1]
         return {"VariableDeclaration": {"name": variable_name, "value": value}}
 
     def parse_function(self):
-        self.match("function definition")  # Skip "def"
+        self.match("function definition")
         function_name = self.match("function")[1]
-        self.match("symbol")  # Skip "("
+        self.match("symbol")
         parameters = []
         while self.current_token()[1] != ")":
             parameters.append(self.match("variable")[1])
             if self.current_token()[1] == ",":
                 self.match("symbol")
-        self.match("symbol")  # Skip ")"
-        self.match("symbol")  # Skip "{"
+        self.match("symbol")
+        self.match("symbol")
         body = self.parse_body()
-        self.match("symbol")  # Skip "}"
+        self.match("symbol")
         return {"FunctionDeclaration": {"name": function_name, "parameters": parameters, "body": body}}
 
     def parse_for_loop(self):
-        self.match("for loop")  # Skip "for"
+        self.match("for loop")
         variable = self.match("variable")[1]
-        self.match("function")  # Skip "in"
-        self.match("function")  # Skip "range"
-        self.match("symbol")  # Skip "("
+        self.match("function")
+        self.match("function")
+        self.match("symbol")
         range_values = [] 
         while self.current_token()[1] != ")":
             range_values.append(self.match(self.current_token()[0])[1])
             if self.current_token()[1] == ",":      
-                self.match("symbol")  #skip "," in range of for
-        self.match("symbol")  # Skip ")"
-        self.match("symbol")  # Skip "{"
+                self.match("symbol")
+        self.match("symbol")
+        self.match("symbol")
         body = self.parse_body()
-        self.match("symbol")  # Skip "}"
+        self.match("symbol")
 
         return {"ForLoop": {"variable": variable, "range": range_values, "body": body}}
 
     def parse_while_loop(self):
-        self.match("while loop")  # Skip "while"
-        self.match("symbol")  # Skip "("
+        self.match("while loop")
+        self.match("symbol")
         condition = self.parse_condition()
-        self.match("symbol")  # Skip ")"
-        self.match("symbol")  # Skip "{"
+        self.match("symbol")
+        self.match("symbol")
         body = self.parse_body()
-        self.match("symbol")  # Skip "}"
+        self.match("symbol")
 
         return {"WhileLoop": {"condition": condition, "body": body}}
 
@@ -93,35 +93,35 @@ class Parser:
             elif token_type == "output function":
                 body.append(self.parse_print_statement())
             else:
-                self.token_index += 1  # Skip unrecognized tokens
+                self.token_index += 1
         return body
 
     def parse_if_statement(self):
-        self.match("if statement")  # Skip "if"
-        self.match("symbol")  # Skip "("
+        self.match("if statement")
+        self.match("symbol")
         condition = self.parse_condition()
-        self.match("symbol")  # Skip ")"
-        self.match("symbol")  # Skip "{"
+        self.match("symbol")
+        self.match("symbol")
         body = self.parse_body()
-        self.match("symbol")  # Skip "}"
+        self.match("symbol")
 
         elif_clauses = []
         while self.current_token()[0] == "else if statement":
-            self.match("else if statement")  # Skip "elif"
-            self.match("symbol")  # Skip "("
+            self.match("else if statement")
+            self.match("symbol")
             elif_condition = self.parse_condition()
-            self.match("symbol")  # Skip ")"
-            self.match("symbol")  # Skip "{"
+            self.match("symbol")
+            self.match("symbol")
             elif_body = self.parse_body()
-            self.match("symbol")  # Skip "}"
+            self.match("symbol")
             elif_clauses.append({"condition": elif_condition, "body": elif_body})
 
         else_clause = None
         if self.current_token()[0] == "else statement":
-            self.match("else statement")  # Skip "else"
-            self.match("symbol")  # Skip "{"
+            self.match("else statement")
+            self.match("symbol")
             else_clause = self.parse_body()
-            self.match("symbol")  # Skip "}"
+            self.match("symbol")
 
         return {
             "IfStatement": {
@@ -133,15 +133,15 @@ class Parser:
         }
 
     def parse_print_statement(self):
-        self.match("output function")  # Skip "print"
-        self.match("symbol")  # Skip "("
+        self.match("output function")
+        self.match("symbol")
         arguments = []
 
         while self.current_token()[1] != ")":
             arguments.append(self.match(self.current_token()[0])[1])
             if self.current_token()[1] == ",":
                 self.match("symbol")
-        self.match("symbol")  # Skip ")"
+        self.match("symbol")
         
         return {"PrintStatement": {"arguments": arguments}}
 
@@ -156,7 +156,7 @@ class Parser:
             elif token_type == "symbol" and token_value in ["+", "-", "*", "/"]:
                 condition.append(self.match("symbol")[1])
             else:
-                self.token_index += 1  # Skip unrecognized tokens
+                self.token_index += 1
         return " ".join(condition)
 
     def peek_next(self):

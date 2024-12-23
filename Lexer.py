@@ -10,16 +10,16 @@ TOKEN_SPECIFICATION = [
     ("KEYWORD_PRINT_FUNCTION", r"\bprint\b"),
     ("KEYWORD_RETURN_STATEMENT", r"\breturn\b"),
 
-    ("COMMENT", r"//.*"),  # Comments
-    ("NUMBER", r"\b\d+(\.\d+)?\b"),  # Integers and decimals
-    ("VAR", r"@[a-zA-Z_]\w*"),  # Variables starting with @
-    ("FUNC", r"[a-zA-Z_]\w*"),  # Function or variable names
-    ("STRING", r'"[^"]*"'),  # Strings enclosed in double quotes
-    ("OP", r"==|!=|<=|>=|<|>|[+\-*/=]"),  # Operators
-    ("SYMBOL", r"[(){}\[\],]"),  # Symbols
-    ("NEWLINE", r"\n"),  # Newlines
-    ("SKIP", r"[ \t]+"),  # Whitespace
-    ("MISMATCH", r"."),  # Any unexpected character
+    ("COMMENT", r"//.*"),  
+    ("NUMBER", r"\b\d+(\.\d+)?\b"),  
+    ("VAR", r"@[a-zA-Z_]\w*"),  
+    ("FUNC", r"[a-zA-Z_]\w*"),  
+    ("STRING", r'"[^"]*"'),  
+    ("OP", r"==|!=|<=|>=|<|>|[+\-*/=]"),
+    ("SYMBOL", r"[(){}\[\],]"),
+    ("NEWLINE", r"\n"),
+    ("SKIP", r"[ \t]+"),
+    ("MISMATCH", r"."),
 ]
 
 
